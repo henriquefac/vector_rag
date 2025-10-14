@@ -1,6 +1,9 @@
 import chromadb
 from chromadb.utils.embedding_functions import OpenAIEmbeddingFunction
 from pprint import pprint
+from configPy import EnvManager
+
+openai_env = EnvManager.openai_env()
 
 def main():
     client = chromadb.HttpClient(host='localhost', port=8000)
@@ -9,12 +12,12 @@ def main():
     collection = client.get_or_create_collection(
         name="textos_em_portugues",
         embedding_function=OpenAIEmbeddingFunction(
-            api_key=""
-            model_name="text-embedding-ada-002",
+            api_key=openai_env.AZURE_OPENAI_API_KEY,
+            model_name=openai_env.EMBEDDING_MODEL,
             api_type="azure",
-            api_version="2025-01-01-preview",
-            api_base=""
-            deployment_id="text-embedding-ada-002"
+            api_version=openai_env.AZURE_OPENAI_API_VERSION,
+            api_base=openai_env.AZURE_ENDPOINT,
+            deployment_id=openai_env.EMBEDDING_MODEL
         )
     )
     print("ChromaDB collection created or retrieved:", collection)
