@@ -1,4 +1,4 @@
 # Ignorar na raiz
-venv/
+.venv/
 files/
 .env
