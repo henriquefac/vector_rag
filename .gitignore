@@ -1,0 +1,4 @@
+# Ignorar na raiz
+venv/
+files/
+.env
