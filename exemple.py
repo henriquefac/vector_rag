@@ -5,8 +5,9 @@ from configPy import EnvManager
 
 openai_env = EnvManager.openai_env()
 
+
 def main():
-    client = chromadb.HttpClient(host='localhost', port=8000)
+    client = chromadb.HttpClient(host="localhost", port=8000)
     print("ChromaDB client initialized:", client)
 
     collection = client.get_or_create_collection(
@@ -17,8 +18,8 @@ def main():
             api_type="azure",
             api_version=openai_env.AZURE_OPENAI_API_VERSION,
             api_base=openai_env.AZURE_ENDPOINT,
-            deployment_id=openai_env.EMBEDDING_MODEL
-        )
+            deployment_id=openai_env.EMBEDDING_MODEL,
+        ),
     )
     print("ChromaDB collection created or retrieved:", collection)
 
@@ -28,17 +29,23 @@ def main():
 
     collection.add(
         documents=[
+            "tnarywjsydutmxk",
             "Esse é um texto que fala sobre culinária. No dia a dia do brasileiro, são muito presentes o arroz e o feijão.",
             "Esse é um texto que fala sobre esportes. O futebol é o esporte mais popular do Brasil.",
-            "nhoeauhtnsoathnsaeonhtsoanhts"
+            "nhoeauhtnsoathnsaeonhtsoanhts",
         ],
-        metadatas=[{"source": ""}, {"source": "test_source"}, {"source": "ushenanhtuea"}],
-        ids=["culinária", "esportes", "useaohtnoahtns"]
+        metadatas=[
+            {"source": "brwsoabuao"},
+            {"source": ""},
+            {"source": "test_source"},
+            {"source": "ushenanhtuea"},
+        ],
+        ids=["estags", "culinária", "esportes", "useaohtnoahtns"],
     )
 
     results = collection.query(
-        query_texts=["bola de futebol", "alimentação", "experiment"],
-        n_results=1
+        query_texts=["tnarywjsydutmxk", "bola de futebol", "alimentação", "experiment"],
+        n_results=1,
     )
     print("ChromaDB query results:")
     pprint(results)
