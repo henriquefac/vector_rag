@@ -13,11 +13,11 @@ def main():
     collection = client.get_or_create_collection(
         name="textos_em_portugues",
         embedding_function=OpenAIEmbeddingFunction(
-            api_key=openai_env.AZURE_OPENAI_API_KEY,
+            api_key=openai_env.AZURE_API_KEY,
             model_name=openai_env.EMBEDDING_MODEL,
             api_type="azure",
-            api_version=openai_env.AZURE_OPENAI_API_VERSION,
-            api_base=openai_env.AZURE_ENDPOINT,
+            api_version=openai_env.AZURE_API_VERSION,
+            api_base=openai_env.AZURE_API_BASE,
             deployment_id=openai_env.EMBEDDING_MODEL,
         ),
     )

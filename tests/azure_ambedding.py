@@ -1,28 +1,15 @@
 from configPy import EnvManager
-from openai import AzureOpenAI
+from litellm import completion
 
-openai_env = EnvManager.openai_env()
+azure_env = EnvManager.openai_env()
+azure_deployment = azure_env.MODEL_NAME
 
-client = AzureOpenAI(
-    api_key=openai_env.AZURE_OPENAI_API_KEY,
-    api_version=openai_env.AZURE_OPENAI_API_VERSION,
-    azure_endpoint=openai_env.AZURE_ENDPOINT,
-    azure_deployment=openai_env.EMBEDDING_MODEL,
+response = completion(
+    model=f"azure/{azure_deployment}",
+    messages=[{"role": "user", "content": "Bom dia do litellm"}],
+    api_key=azure_env.AZURE_API_KEY,
+    api_base=azure_env.AZURE_API_BASE,
+    api_version=azure_env.AZURE_API_VERSION,
 )
 
-
-texts = [
-    "A Justiça Eleitoral é responsável pela organização das eleições no Brasil.",
-    "O autoatendimento do eleitor permite atualização cadastral online.",
-]
-
-
-response = client.embeddings.create(
-    model=openai_env.EMBEDDING_MODEL,  # ⚠️ nome do deployment, não o nome do modelo OpenAI!
-    input=texts,
-)
-
-for i, emb in enumerate(response.data):
-    print(f"\nTexto {i+1}: {texts[i][:50]}...")
-    print(f"Tamanho do embedding: {len(emb.embedding)}")
-    print(f"Primeiros 5 valores: {emb.embedding[:5]}")
+print(response)
