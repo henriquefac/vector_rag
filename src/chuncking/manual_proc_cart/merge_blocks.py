@@ -20,7 +20,7 @@ def merge_content_blocks(segment: Union[Section, Subsection]):
                 merge_content_blocks(sub)
 
     if len(content_blocks) <= 1:
-        return
+        return segment
 
     merged_blocks: list[Block] = []
     current_main_block: Block = None

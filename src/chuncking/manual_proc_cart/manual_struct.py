@@ -40,23 +40,28 @@ class ChunkManual:
     ):
         related_norms = [n for n in norms if n in text]
 
-        header = []
+        # header = []
 
-        if document_origin:
-            header.append(document_origin)
-        if themes:
-            header.extend(themes)
+        # if document_origin:
+        #    header.append(document_origin)
+        # if themes:
+        #    header.extend(themes)
 
-        final_text = f"{"-".join(header)}\n\n{text}"
+        # final_text = f"{"-".join(header)}\n\n{text}"
 
         return cls(
-            text=final_text,
+            text=text,
             document_origin=document_origin,
             section_origin=section_origin,
             subsection_origin=subsection_origin,
             themes=themes,
             related_norms=related_norms,
         )
+
+    def get_norms(self):
+        if self.related_norms:
+            return ", ".join(self.related_norms)
+        return None
 
 
 @dataclass
@@ -162,12 +167,11 @@ class Manual:
         norms = self.get_norm_ref()
 
         for section in self.content:
+            bp = 1
+
             title_section = section.title
 
-            themes = []
-
-            if section.themes:
-                themes.extend(section.themes)
+            themes_section = section.themes
 
             content_blocks = section.content_blocks
             len_content = len(section.content_blocks)
@@ -185,7 +189,7 @@ class Manual:
                     document_origin=doc_name,
                     section_origin=title_section,
                     subsection_origin=None,
-                    themes=themes,
+                    themes=themes_section,
                     norms=norms,
                 )
 
@@ -197,9 +201,6 @@ class Manual:
             for sub in subsections:
                 title_subsection = sub.title
                 themes_subsection = sub.themes
-
-                if themes_subsection:
-                    themes.extend(themes_subsection)
 
                 sub_content_blocks = sub.content_blocks
                 len_sub_content = len(sub_content_blocks)
@@ -217,6 +218,6 @@ class Manual:
                         document_origin=doc_name,
                         section_origin=title_section,
                         subsection_origin=title_subsection,
-                        themes=themes,
+                        themes=themes_subsection,
                         norms=norms,
                     )

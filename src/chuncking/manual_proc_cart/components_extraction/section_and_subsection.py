@@ -55,7 +55,11 @@ def extract_sections_and_subsections(pdf_dict: PDFDict, width: float) -> list[Se
 
             if not   isinstance(current_section, Section):
                 raise ValueError("Não pode existir Subsection sem ter antes um 'Section'")
-               
+            
+            if current_subsection:
+                current_section.subsection.append(current_subsection)
+                current_subsection = None
+
             current_subsection = Subsection(title=block_text)
             pointer += 1
             continue

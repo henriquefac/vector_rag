@@ -11,14 +11,14 @@ def main():
     print("ChromaDB client initialized:", client)
 
     collection = client.get_or_create_collection(
-        name="textos_em_portugues",
+        name="QUALQUERMERDA",
         embedding_function=OpenAIEmbeddingFunction(
             api_key=openai_env.AZURE_API_KEY,
-            model_name=openai_env.EMBEDDING_MODEL,
+            model_name="text-embedding-ada-002",
             api_type="azure",
             api_version=openai_env.AZURE_API_VERSION,
             api_base=openai_env.AZURE_API_BASE,
-            deployment_id=openai_env.EMBEDDING_MODEL,
+            deployment_id="text-embedding-ada-002",
         ),
     )
     print("ChromaDB collection created or retrieved:", collection)
@@ -33,18 +33,26 @@ def main():
             "Esse é um texto que fala sobre culinária. No dia a dia do brasileiro, são muito presentes o arroz e o feijão.",
             "Esse é um texto que fala sobre esportes. O futebol é o esporte mais popular do Brasil.",
             "nhoeauhtnsoathnsaeonhtsoanhts",
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPORAAAAAAAAAAAAAAAAAAAAAAA",
         ],
         metadatas=[
             {"source": "brwsoabuao"},
             {"source": ""},
             {"source": "test_source"},
             {"source": "ushenanhtuea"},
+            {"source": "mematadeumavez"},
         ],
-        ids=["estags", "culinária", "esportes", "useaohtnoahtns"],
+        ids=["estags", "culinária", "esportes", "useaohtnoahtns", "putaqueoariu"],
     )
 
     results = collection.query(
-        query_texts=["tnarywjsydutmxk", "bola de futebol", "alimentação", "experiment"],
+        query_texts=[
+            "tnarywjsydutmxk",
+            "bola de futebol",
+            "alimentação",
+            "experiment",
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        ],
         n_results=1,
     )
     print("ChromaDB query results:")

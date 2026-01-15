@@ -9,8 +9,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 # Importações de módulos customizados
 from src.chuncking.manual_proc_cart import (
     Manual,
-    # get_chunks_with_context,
-    get_chunks_only_metadata,
 )
 from configPy import Config
 import pandas as pd
@@ -37,11 +35,11 @@ print(f"--- ARQUIVO PARA EXTRAIR OS COMPONENTES: {test_file.name} ---")
 
 manual = Manual.create_from_pdf(test_file)
 # Note: Usando get_chunks_with_context, conforme seu último código
-chunk_met_only = list(get_chunks_only_metadata(manual))
+chunk_met_only = list(manual.get_chunks_by_window(2, 1))
 
 print(f"--- Encontrados {len(chunk_met_only)} chunks. ---")
 chunk_met_only_embedding = np.array(
-    [get_embedding_for_chunk(chunk["document"]) for chunk in chunk_met_only]
+    [get_embedding_for_chunk(chunk.text) for chunk in chunk_met_only]
 )
 print(
     f"--- Embeddings dos Chunks gerados. Dimensão: {chunk_met_only_embedding.shape} ---"
@@ -84,7 +82,7 @@ for idx, (query, query_embedding) in enumerate(zip(querys, querys_embedding)):
     # Prepara os resultados para o DataFrame
     for chunk_rank, i in enumerate(top_indices):
         # Acessa o chunk original e limpa quebras de linha
-        chunk_text = chunk_met_only[i]["document"].replace("\n", " ")
+        chunk_text = chunk_met_only[i].text.replace("\n", " ")
         all_query_results.append(
             {
                 "Query Index": idx + 1,
