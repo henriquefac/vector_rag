@@ -10,11 +10,11 @@ import hashlib
 from configPy import Config
 from src.chuncking.manual_proc_cart import Manual
 
-openai_env = EnvManager.openai_env()
+openai_env = EnvManager.azure()
 
-AZURE_API_KEY = openai_env.AZURE_API_KEY
-AZURE_API_BASE = openai_env.AZURE_API_BASE
-AZURE_API_VERSION = openai_env.AZURE_API_VERSION
+AZURE_API_KEY = openai_env.AZURE_OPENAI_API_KEY
+AZURE_API_BASE = openai_env.AZURE_ENDPOINT
+AZURE_API_VERSION = openai_env.AZURE_OPENAI_API_VERSION
 
 EMBEDDING_MODEL = openai_env.EMBEDDING_MODEL
 LLM_MODEL = openai_env.MODEL_NAME
